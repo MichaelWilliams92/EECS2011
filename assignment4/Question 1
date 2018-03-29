@@ -1,0 +1,167 @@
+/**********************************************************
+ * EECS2011: Fundamentals of Data Structures,  Fall 2014
+ * Assignment 4
+ * Student Name:         Michael Williams
+ * Student cse account:  mw1992
+ * Student ID number:    211087798
+ **********************************************************/
+
+*/
+In this program, given a sorted map that has been implemented by means of a standard binary search tree, called X, the 
+following pseudocode shows how to perform the operation removeSubMap(k1, k2). In this algorithm, all entries within 
+traverse(k1, k2) are removed, while doing so in, at worst case, O(s + h) time, where s refers to the number of entries
+removed, and h refers to the height of the sorted map given.
+
+To do this, after ensuring that k1 and k2 keys exist in X and are references to the boundaries of a submap, we 
+recursively traverse  through X, to the bottom, left most most node of the submap to be deleted, or in this case, the 
+left end of the interval, where we then remove the external node, and make our way back through the recursive steps
+ deleting all the other nodes in the submap, up to and including the node at the right interval, in an in order fashion.
+ When this is complete, the entire interval will have been removed
+
+ RemoveSubMap takes the range of keys [k1,k2), where k1 is included, k2 is not.  It then removes these keys and outputs
+ the removed elements into a list to be used as output. Adding elements to the list take O(s) times, where S is the size 
+ of the submap to be removed, in terms of keys.  This RemoveSubMap method has a helper method inside ,called traverse.
+ Traverse recursively loops through the tree to find the the entry to be removed. In the worst case, it recurses to the 
+ height of the tree, H. This recursion, o(h) takes log(n) time. Inside the the traverse method there is a removeEntry 
+ method. The removeEntry method replaces the node to be removed with its predecessor. This operation of removal takes 
+ O(1) time.
+ 
+ Overall, this implementation runs in O(s+h).
+
+This is done with the help of the 3 helper methods, getPredecessor, subMap, and most importantly, removeEntry. 
+
+@param k1    starting key interval
+@param k2    ending key interval
+
+@return X    returns a of entries removed.  The removed entries are the keys within the interval [k1, k2), where k2 is not
+included.
+*/
+removeSubMap(k1, k2) {
+
+	ArrayList list<Entry<K, V>> = newArrayList<Entry<K, V>>(size())  // Create an empty list having the size of the sorted map
+	Position<Entry<K, V>> fromKey = keySearch(root(), k1)            // Search for the key k1. Return the position of the key if key is found else return null
+	Position<Entry<K, V>> toKey = keySearch(root(), k2)              // Search for the key k2. Return the position of the key if key is found else return null
+	
+	if (fromKey != NULL && toKey != NULL)                            // Keys k1 and k2 exist in the sorted map
+	{
+		if (fromKey < toKey)
+		{
+			traverse(fromKey, toKey, root(), list)                     // call to the private method subMap
+			return list                                              // Return a list of all the entries removed from the sorted map
+		}
+	}
+	else
+	{
+		return list is empty                                         // Keys k1 and k2 don't exist in the sorted map.
+	}
+}//removeSubMap method
+
+
+/////////////////////////////////////////////HELPER METHODS/////////////////////////////////////////////////////////
+/*
+The traverse method traverses through the interval given until it reaches the bottom, left most entry of the interval
+to be removed.  It does this recursively so that the elements only need to be traversed once through the internal of
+entries to be removed.
+
+In the worst case, it recurses all the way to the height of the tree which O(h) H is log (n), because 
+Traverse recursively loops through the tree to find the the entry to be removed, once
+
+
+@param fromKey                     The key to act as the left end of the interval to be deleted
+@param Position <Entry<K, V>> p    The root of the current tree or subtree
+@param ArrayList<Entry<K, V>>      list which will contain all the elements to be removed
+*/
+Algorithm private traverse(K fromKey, K toKey, Position <Entry<K, V>> p, ArrayList<Entry<K, V>> list){
+
+	if (isInternal(p))
+	{
+		if (p.getElement().getKey() < fromKey)         // The key of p is less than from key, so we should consider the right subtree to remove any relevant entries that fall within the range of fromKey to toKey
+		{	
+			traverse(fromKey, toKey, right(p), list)     // recursive call on the right subtree
+		}
+		else
+		{
+			traverse(fromKey, toKey, left(p),list)       // recursive call on the left subtree
+			
+			if (p.getElement().key() < toKey) 
+			list.add(p.getElement())                   // Add the entry to be removed to the list
+			removeEntry(p)                            // call to a private method removeEntry that removes the given position
+			traverse(fromKey, toKey, right(p), list)    // recursive call on the right subtree
+		}
+	}
+}//traverse Method	
+
+/*
+This method removes the entry in the given position P.  Once its been removed, the bulk of the remaining code
+is used for rebalancing as to not create any problems or disrupt any properties.
+
+This method runs in O(1) time, because when this method is called, there is already a direct reference to the entry
+to be deleted.  Because we already have this, there is no further searching or traversals needed.  Thus, it runs in
+O(1) time.
+
+@param Postion <Entry<K, V>> p   The position to be removed
+
+*/
+private removeEntry(Position <Entry<K, V>> p){
+	if (left(p) == NULL && right(p) == NULL)                          // If both children of p are NULL
+	{
+		if (left(parent(p)) == p)                                     // Look if p is the left child of his parent
+		{
+			parent(p).setLeft(null) // Remove p
+		}
+		else 
+		{ 	                                                          // p is the right child of his parent
+			parent(p).setRight(null) // Remove p
+		}
+	}
+	else if ((left(p) == NULL  && right(p) != NULL) || (right(p) == NULL && left(p) != NULL))   // If either the left child or the right child is NULL
+	{
+		Position <Entry<K, V>> parent = parent(p)                // Get the position of the parent of p
+		
+		if (p == left(parent(p)))                                // Look if p is the left child of his parent
+		{
+			if (right(p) == NULL)
+			{
+				parent(p).setLeft(left(p))                       // Set the left child of the parent of p to the left child of p
+			}
+			else
+			{
+				parent(p).setLeft(right(p))                      // Set the left child of the parent of p to the right child of p
+			}
+		}
+		else
+		{	                                                    // p is the right child of his parent
+			if (right(p) == NULL)
+			{
+				parent(p).setRight(left(p))            // Set the right child of the parent of p to the left child of p
+			}
+			else
+			{
+				parent(p).setRight(right(p))           // Set the right child of the parent of p to the right child of p
+			}
+		}
+	}
+	else
+	{	
+		                                                     // The children of p are not NULL
+		getPredecessor(p)                                    // call to the private method getPredecessor
+	}
+}//remove entry method		
+
+/*
+This method obtains the predecessor of the of the given position.
+
+@param Position <Entry<K, V>> removeNode    the position to be removed
+*/
+Algorithm private getPredecessor(Position <Entry<K, V>> removeNode){
+
+	Position<Entry<K, V>> leftChild = left(removeNode)            // Take the left child of the position to be removed
+	
+	while(right(leftChild) != NULL) 
+	{
+		leftChild = right(leftChild)                              // Take the right child of the position leftChild
+	}
+	 
+	removeNode.setElement(leftChild.getElement())                 // Replace the entry of the position to be removed by the entry of its predecessor
+	removeEntry(leftChild)                                        // Remove the predecessor
+}//getPredecessor method

@@ -1,0 +1,239 @@
+/**********************************************************
+ * EECS2011: Fundamentals of Data Structures,  Fall 2014
+ * Assignment 4
+ * Student Name:         Michael Williams
+ * Student cse account:  mw1992
+ * Student ID number:    211087798
+ **********************************************************/
+
+This is the pseudocode for assignment 4 question 3.
+In this pseudo code, we are given an undirected graph G.  Using G, we provide implementation for the 4 methods
+eccentricity(v), diameter(), radius(), and center(). The pseudo code also contains 2 helper methods, that build
+the graph g and analyzes it, to essentially provide the eccentricity needed for the 4 methods mentioned above.
+Before the 4 main methods can be called, the 2 helper methods are first automatically invoked: minDistance first,
+followed by eccentricity.  By invoking the 2 helper methods in this order, we will already have most of the information
+available for use with the 4 main methods, and therefore reduce time complexity.
+
+The helper methods are the 2 directly below this summary.
+
+Running times differ for each of the 4 main methods, but are still described above the actual method pseudocode.
+
+For ease with reading the following pseudocode, it is advised to use jedit.
+
+///////////////////////////////////////////////HELPER METHODS///////////////////////////////////////////////////////
+
+X[][];            //initialize the 2 arrays used in the helper methods
+E[];              //the helper methods then instantiate them
+                  
+
+/*
+
+This helper method calculates the minimum distances for every pair of vertex in the given graph G.
+This method acts as the helper method to the main helper method.  With this information, we use the main helper method
+below to compute the eccentricities of any node in G.
+
+This method begins by mapping the adjacent nodes in the given 2d array cost, to a new 2d array D. For each and every node in the graph, its adjacent nodes
+are connected together to build the pathway.  The result is the entirety of the pathways that make up the graph,
+all connected.  After we have this, the method finds the connections between each individual nodes, and decides the 
+minimum distance or pathway between them.  This is done by looking at each node, and then calculating its minimum 
+distance to every other individual node in the entire graph.
+
+This method runs in O(n^3) time, because of the nested for loop which traverses through n on 3 levels
+Therefore, the method runs in n * n * n time or O(n^3).
+
+Returns X     The 2d array containing the minimum distances/pathways between every pair of vertex in the entire graph.
+
+@param n               The number of nodes in the graph
+@param adjacents[][]   The 2d array of all adjacent nodes in the graph G
+
+*/
+MinDistances(n , adjacents[][]) {
+
+	for (i = 0 ; i < n ; i++)	// initialize distance for every pair of vertex if available
+	{							//if not available, it means there is no connection
+		for(j = 0 ; j < n ; j++)
+		{
+			if(adjacents[i][j] exist)       
+				X[i][j] = adjacents[i][j]
+			else
+				X[i][j] = noConnection
+		}
+	}end of nested for loop
+		 
+	//below, the  Minimum Distance between Every Pair of vertex is calculated
+
+	for (k = 0 ; k < n ; k++)
+	{
+		for (i = 0 ; i < n ; i++)	// initialize distance for every pair of vertex if available
+		{
+			for(j = 0 ; j < n ; j++)
+			{
+				X[i][j] = Minimum(X[i][j] , X[j][k]+X[k][i])   // X[i][j] is given the minimum distance from nodes i to j
+			}												   //the new distance is the distance of its predecessor
+															   //(X[j][k]) + the adjacent Node(X[k][i] == 1)
+		}
+	}//end of nested for loop
+     
+     
+	return X;
+}//end of minDistance method
+
+
+/*
+This is the main helper method.  By using the information obtained from the minDistance method, this method
+now calculates the eccentricity of each node in G.  More specifically, it calculates, for each node in the graph, 
+the length of the shortest path from the node in question, to the node furthest from it.
+
+The method itself works by first obtaining the 2d array returned in the minDistance method. Then, it simply traverses
+through each recorded distance for each pair of nodes (a, b), where a is the node whose eccentricity is being obtained
+and b is every other node. When the traversal is over, the value stored in the max variable is The maximum distance of 
+these minimum paths, or the eccentricity of node a.  That value is then stored in the array E[], at node i, or E[i].
+
+This method runs in O(n^2) time because of the traversal of the 2 dimensional array.  Doing so causes n to be traversed
+on 2 levels.  So, the method runs in n * n time or O(n^2).
+
+return E     The array of all eccentricities for all nodes in the given graph G. its indices, i, refer to the node 
+			 itself and the value is its eccentricity.
+
+*/
+Eccentricity(){
+	
+	E[] = NULL
+	for(i = 0 ; i < n ; i ++)
+	{
+		max = X[i][0]
+		for(j = 0 ; j < n ; j++)       
+		{							
+			if (D[i][j] > max)			
+				max = D[i][j]
+		}
+		E[i] = max
+	}
+	return E
+}//Eccentricity method
+
+
+/////////////////////////////////////////////MAIN METHODS//////////////////////////////////////////////////////////////
+
+
+/*
+This method return the eccentricity of the vertex given.  More specifically, it calculates, for each node in the graph, 
+the length of the shortest path from the node given, to the node furthest from it.
+
+This method runs in O(1) time.
+
+@return E[v]  The length of the vertex's eccentricity
+
+@param v      The vertex whose eccentricity is to be found
+*/
+int getEccentricity(v) {
+	return E[v]    
+}
+
+/*
+This method returns the diameter of the given graph G.  More specifically, this method returns the maximum
+eccentricity within the entirety of G.
+
+This is done by traversing through the array of eccentricities and simply returning the largest value.
+
+This method runs in O(n) time.  This is because the method must traverse through the array of eccentricities.  
+Because in its worst case, it searches the entire array, we define the time to compute this as O(n).
+
+@return max      Returns the diameter
+*/	
+int diameter() {
+	max = E[0]
+	for(i = 0 ; i < n ; i++)	
+	{						
+		if(E[i]>max)            
+			max = E[i]
+	}
+	return max
+}
+
+/*
+This method returns the radius of the given graph G.  More specifically, it returns the smallest eccentricity within
+the entirety of G.
+
+This method works by traversing through the array of eccentricities and simply returning the smallest one
+
+This method runs in O(n) time. This is because the method must traverse through the array of eccentricities.  
+Because in its worst case, it searches the entire array, we define the time to compute this as O(n).
+
+@return  min     returns the radius
+*/
+int radius()  {
+	min = E[0]
+	for(i = 0 ; i < n ; i++)		
+	{								
+		if(E[i] < mix)				
+			min = E[i]
+	}
+	return min
+}
+
+/*
+This method finds the center of the given graph G.  More specifically, it finds a vertex whose eccentricity is that
+of the radius
+
+This is done by traversing through the array of eccentricities, and returning the node that matches the radius.
+
+This takes at most O(n) time.  This is because the method must traverse through the array of eccentricities.  
+Because in its worst case, it searches the entire array, we define the time to compute this as O(n).
+
+@return i     Returns the center.
+*/
+int center()
+{
+	radius = radius()			
+	for(i = 0 ; i < n ; i++)
+	{							
+								
+		if (radius == E[i])     
+			return i;
+	}
+}
+
+////////////////////////Proof for question a//////////////////////////////////////////////////////////////////////////
+R = radius
+D = Diameter
+
+Proof for the statement that R <= D <= 2R
+   
+   R <= D
+   1.let u and v be vertices of graph such that d(u,v) = D (Diameter)
+   
+   2.let h be a vertex in the center of the graph.  Thus, the proof can be rewritten as
+      d(u,v) <= d(u,h) + d(h,v) <= 2R
+
+	according to the triangle law, the sum of any two sides is always greater than or equal to the last side
+	This means the sum of the 2 lengths d(u,h) and d(h, v)  is always greater than or equal to diameter
+	
+	To prove that this resultant is less than or equal to 2R, we refer to the 2 possible cases for d(u,h) and d(h, v):
+		1)If number of nodes is even, meaning r = d(u, h) = d(h, v)
+			In this case, d(u, h) + d(h, v) = r + r = 2R
+			
+			So in this case, the proof is true
+		
+		
+	    2)if number of nodes is odd, r = d(u, h) + d(h, v) > R2
+	    	Through eccentricity, we know that given an odd number of nodes, we know that
+	    	one of these 2 length must have a greater value than the other.  The smaller value is R 
+	    	Thus, the sum of d(u,h) and d(h, v) if they both equal the radius in this situation is < R2
+	
+	WE HAVE THUS ACCOMPLISHED THE FOLLOWING:
+	prove d( u, v) <= d(u,h) + f(h, v) by triangle law
+	prove d(u,h) + f(h, v) < 2R with odd cases, u can prove #3 with the same concept
+	prove d(u,h) + f(h, v) = 2R with even cases
+	
+
+    And hence, 
+
+    R <= d(u,h) + d(h,v)
+    d(u,v) <= d(u,h) + d(h,v)
+    d(u,h) + d(h,v) <= 2R
+
+    hence R <= D <= 2R
+
+
+

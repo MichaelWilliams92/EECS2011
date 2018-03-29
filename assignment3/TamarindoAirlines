@@ -1,0 +1,48 @@
+/**********************************************************
+ * EECS2011: Fundamentals of Data Structures,  Fall 2014
+ * Assignment 3
+ * Student Name:         Michael Williams
+ * Student cse account:  mw1992
+ * Student ID number:    211087798
+ **********************************************************/
+
+This is the pseudocode for  assignment 3 question 3.  Below, I attempted to explain, in as
+simple pseudocode as possible, how to identify the top log n flyers, based on the miles they have
+flown, and output these flyers to the user.  The algorithm involves invoking a maxHeap in the form
+of a priority queue. However, there is a slight adjustment.  In the creation of this heap, we 
+use the Collections.reverseOrder() method. This will force the reversal of the natural ordering
+system used in the priority queue. In other words, the queue will contain its largest element at 
+the top, instead of its smallest. The heap itself will take the flyer information down in the form
+of entries.  That is, the key value, K,  will be the mileage each airline has undergone and the the value
+ V, will store the flyer name. Once all entries are stored in the heap, we simply return the value at the
+top of the heap log n times, as the heap itself is automatically corrected and places the new highest
+key at the top, every time the top value is removed.  We take these values and output them to the user
+and all in O(n) time.  The reason this is done in O(n) time is because storing the values into
+the heap will involve traversing through n entries, hence O(N) time.  The for loop only does at
+most log n computations, so it only runs at O(log n).  Thus, the entire program runs at 
+O(n + log n) time, which results in O(n) time.   
+    
+  
+
+	BiggestFlyers(X) {   //X refers to the list of the n airlines in the run for the upgrade coupon
+	
+		public  PriorityQueue<Entry> flyerHeap = new PriorityQueue<Entry>(n, Collections.reverseOrder());
+	 	//flyerHeap is a heap based priority queue
+	 	
+	 	Iterator<Entry> iterator = list.iterator(); //create an iterator for the list
+	 	     while (iterator.hasNext()) {
+	 	     
+	 	     flyerHeap.add(new Entry(iterator.next.k, iterator.next.v) //add the entry information
+	 	                                                              //to the heap
+	 	                                                              
+	 	     }//while there is still an entry in the list, keep adding the entry to the heap
+	 	
+	for(int i = 0; i < log n; i ++){
+	
+		A[i] = flyerHeap.removeMax();   //A is an array to contain the top log n flyers.
+	                                    //removeMax() will remove the top entry in the heap.
+	}//for loop to pull out log n top flyers
+	
+	return A;  //return the top log n flyers
+	
+	}

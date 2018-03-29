@@ -1,0 +1,84 @@
+/**********************************************************
+ * EECS2011: Fundamentals of Data Structures,  Fall 2014
+ * TEST CASES AND OUTPUT
+ * Student Name:         Michael Williams
+ * Student cse account:  mw1992
+ * Student ID number:    211087798
+ **********************************************************/
+ 
+ These are the visuals for the test cases provided throughout question 2 of the assignment, 
+ contained inside the TestCases file.
+ 
+ 1)                   (r)
+                     /  \
+                    /    \
+                   (a)   (b)
+                   / \
+                  /   \
+                 (c)  (d)
+                 /    / \
+                /    /   \
+               (e)  (f)   (g)
+               /    /      \
+              /    /        \
+             (h)  (i)       (j)
+             /    / \
+            /    /   \
+           (n) (k)   (m)
+               /
+              /
+             (l)  
+             
+
+2)                    (r)
+                     /  \
+                    /    \
+                   (a)   (b)
+                   / \
+                  /   \
+                 /     \
+                /       \
+               /         \ 
+              (c)        (d)
+              / \        / \ 
+             /   \      /   \  
+            (e)  (f)   (g)  (h)
+            /                /
+           /                /
+          (i)             (j)
+          
+ 
+3)                   (r)
+                       \
+                        \
+                        (a)
+                        / \
+                       /   \
+                      (b)  (c)
+                        \     \
+                         \     \
+                         (d)   (e)
+                         
+      
+4)                   (r)
+                     / \
+                    /   \                          
+                   (a)  (b)
+                   / \
+                  /   \
+                 (c)  (d)
+                 
+                 
+5)No tree, as it is supposed to be empty in this example
+
+6) (r)      ie, a 1 node tree
+
+7)                   (r)
+                     / \
+                    /   \
+                   /     \
+                  /       \
+                (a)      (b)
+                / \      / \
+               /   \    /   \
+              (c)  (d) (e)  (f)           

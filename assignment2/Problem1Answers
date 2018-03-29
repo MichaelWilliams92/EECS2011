@@ -1,0 +1,84 @@
+/**********************************************************
+ * EECS2011: Fundamentals of Data Structures,  Fall 2014
+ * Assignment 2
+ * Student Name:   Michael Williams
+ * Student cse account:  mw1992
+ * Student ID number:  211087798
+ **********************************************************/
+____________________________________________________________________________________________________
+
+
+1 	a) if (n = 1) Turn on light 1
+	 	else {
+	 		if (n > 2) turnOn(n - 2) 
+	 		Turn on light (n - 1)
+	 		if (n > 2) turnOff(n - 2)
+	 		turnOn light n
+	 		turnOn(n - 2)
+	 		
+	 c)Upon a few experimental procedures i was able to deduce that the method runs in an exponential function.
+	   The best fitting upper bound i was able to come up with is in the form f(n) = 2 ^ n. As seen in my test results,
+	   when increasing the number by a fixed amount, the amount of times the lights are turned on or off increases
+	   by higher increments for larger amounts of lights.  Given the information above, as well as the other experimental 
+	   data i used and acquired, as well as the test files, the function i have given, an exponential function that is, seems to
+	   best describe the algorithm used in my program.  It should be noted that this, being an upper bound, does describe the worst 
+	   case scenario for the program.
+	   
+		Here are some test examples with results:
+		
+		Enter the number of lights: 5
+		Enter 0 for lights initially off or 1 for lights initially on: 0
+		[0, 0, 0, 0, 0]
+		[1, 1, 1, 1, 1]
+		The number of times lights is turned off and on: 17
+		
+		Enter the number of lights: 6
+		Enter 0 for lights initially off or 1 for lights initially on: 0
+		[0, 0, 0, 0, 0, 0]
+		[1, 1, 1, 1, 1, 1]
+		The number of times lights is turned off and on: 28
+		
+		
+		Enter the number of lights: 7
+		Enter 0 for lights initially off or 1 for lights initially on: 0
+		[0, 0, 0, 0, 0, 0, 0]
+		[1, 1, 1, 1, 1, 1, 1]
+		The number of times lights is turned off and on: 57
+		
+			
+		Enter the number of lights: 5
+		Enter 0 for lights initially off or 1 for lights initially on: 1
+		[1, 1, 1, 1, 1]
+		[0, 0, 0, 0, 0]
+		The number of times lights is turned off and on: 21
+		
+		Enter the number of lights: 6
+		Enter 0 for lights initially off or 1 for lights initially on: 1
+		[1, 1, 1, 1, 1, 1]
+		[0, 0, 0, 0, 0, 0]
+		The number of times lights is turned off and on: 40
+		
+		Enter the number of lights: 7
+		Enter 0 for lights initially off or 1 for lights initially on: 1
+		[1, 1, 1, 1, 1, 1, 1]
+		[0, 0, 0, 0, 0, 0, 0]
+		The number of times lights is turned off and on: 79
+	
+	d) if (m = false) {
+		if (x = 1) Turn off light 1
+		else {
+			if (x > 2) turnOff(x - 2)
+			Turn off light x
+			if (x > 2) turnOn(x - 2)
+			turnOff(x-1)
+			}
+		
+		if (m = true) {
+		if (x = 1) Turn on light 1
+	 	else {
+	 		if (x > 2) turnOn(x - 2) 
+	 		Turn on light (x - 1)
+	 		if (x > 2) turnOff(x - 2)
+	 		turnOn light x
+	 		turnOn(x - 2)
+	 		} 

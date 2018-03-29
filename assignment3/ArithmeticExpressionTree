@@ -1,0 +1,41 @@
+/**********************************************************
+ * EECS2011: Fundamentals of Data Structures,  Fall 2014
+ * Assignment 3
+ * Student Name:         Michael Williams
+ * Student cse account:  mw1992
+ * Student ID number:    211087798
+ **********************************************************/
+
+
+		 (/)						
+	     / \
+	    /   \
+	   /     \
+	 [6]     (-)
+	         / \
+	        /   \
+	       /     \
+	     [1]     (/)
+	             / \
+	            /   \
+	           /     \
+	         [5]     [7]
+	         
+	         
+	         
+	         
+The above depicts the arithmetic expression tree, as specified in question 1, where the given tree 
+will  express the value 21 at its root.
+
+The equation itself, associated with the above tree, is in the form  6 / (1 - (5 / 7)).
+									-	5/7 will remain the fraction itself
+									-   1 - 5/7 = 7/7 - 5/7 
+									            = 2/7
+									-   6 / 2/7 = 6 * 7/2 
+									            = 42/2
+									            = 21
+									            
+"(-)" refers to the minus operator
+"(/)" refers to the division operator	
+-values stored inside the square brackets ([ ]) contain the operands themselves for the 
+ mathematical operation								            

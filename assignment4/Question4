@@ -1,0 +1,39 @@
+/**********************************************************
+ * EECS2011: Fundamentals of Data Structures,  Fall 2014
+ * Assignment 4
+ * Student Name:         Michael Williams
+ * Student cse account:  mw1992
+ * Student ID number:    211087798
+ **********************************************************/
+ 
+ /*
+ Any values referred to as not connected to go infinity.
+ 
+ @param  the weighted graph G and 2 distinguishable vertices a and b
+@return  The maximum bandwith over all paths between a and b
+ */
+ Algorithm( maxBandwith (G, a, b){
+ 
+ initialize D|a| = not connected and D|u| = 0 for each vertex u!= a in G
+ let a priority queue Q contain all the vertices of G using the D labels as keys
+ 
+ While (Q = !empty){
+ 	u = Q.removeMaxElement()
+ 	if (u == b)
+ 		return D[u]
+ 	else
+ 	  for(each vertex z in Q, adjacent to u){
+ 	  	d <--- min(D[u], w((u,z)))
+ 	  	
+ 	  	if (d > D[z]){
+ 	  		D[z] = d
+ 	  		change the key value of z in Q to D[z]
+ 	  	}
+ 	  	
+ 	  }//for loop	
+  }//while loop
+  
+ }//pseudocode
+ 	  		
+ 	  		
+ 

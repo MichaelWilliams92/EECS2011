@@ -1,0 +1,54 @@
+/**********************************************************
+ * EECS2011: Fundamentals of Data Structures,  Fall 2014
+ * Assignment 2
+ * Student Name:   Michael Williams
+ * Student cse account:  mw1992
+ * Student ID number:  211087798
+ **********************************************************/
+Question 2
+
+	Here is the following test:
+	
+	[5]
+	[3, 5]
+	[7, 3, 5]
+	
+	7
+	5
+	2
+	3
+	7
+	
+	[6]
+	6
+	[8, 6]
+	false
+	6
+	[8, 6]
+
+	
+	The running time of int size() method is O(1) because it is constant time that returns the variable count.
+
+	
+	The running time of boolean isEmpty() method is O(1) because it is constant time that checks if count == 0.
+	
+	
+	The running time of E first() method is O(1) because it is constant time because that returns the first element of the tail.
+	
+	
+	The running time of E last() method is O(1) because it a constant that returns the first element of the head.
+	
+	
+	The running time of void addFirst(E element) method is O(n) because the stack operations is linear.
+	
+
+	The running time of void addLast(E element) method is O(n) because the stack operations is linear.
+	
+	
+	The running time of E removeFirst() method is O(n) because the stack operations is linear.
+	
+	
+	The running time of void E removeLast() method is O(n) because the stack operations is linear.
+	
+
+	
